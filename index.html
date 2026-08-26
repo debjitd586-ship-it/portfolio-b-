@@ -3,26 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Neon Run // Arena</title>
+  <meta name="description" content="Debjit Das - tech enthusiast and aspiring software developer.">
+  <title>Debjit Das | Tech Enthusiast</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <main id="game-shell">
-    <canvas id="game-canvas" aria-label="Neon Run shooting game"></canvas>
-    <div class="scanlines"></div>
-    <section id="hud" aria-live="polite">
-      <header><div class="brand"><b>N</b><span>NEON RUN<small>SECTOR 07 / LIVE</small></span></div><div><small>WAVE</small><strong id="wave">01</strong></div><div><small>SCORE</small><strong id="score">000000</strong></div></header>
-      <div class="reticle"><i></i></div>
-      <div class="bottom"><div class="armor"><small>ARMOR</small><span><i id="health-bar"></i></span><b id="health">100</b></div><div class="ammo"><small>ENERGY CELLS</small><b id="ammo">12</b><em>/ 12</em></div></div>
-      <p class="hint"><b>W A S D</b> MOVE　 <b>MOUSE</b> AIM　 <b>CLICK</b> FIRE</p>
-    </section>
-    <section id="start-screen" class="screen"><small class="eyebrow">FIRST PERSON // TRAINING SIM</small><h1>NEON<br><em>RUN</em></h1><p>A quick reflex arena built for the afterglow. Clear the wave. Stay moving. Make every shot count.</p><button id="start-button">ENTER THE ARENA <b>↗</b></button><footer><span>W A S D <i>move</i></span><span>MOUSE <i>aim</i></span><span>CLICK <i>fire</i></span></footer></section>
-    <section id="game-over" class="screen hidden"><small class="eyebrow">SIGNAL LOST // RUN COMPLETE</small><h2>GOOD<br><em>RUN.</em></h2><p>FINAL SCORE <strong id="final-score">000000</strong></p><button id="restart-button">RUN IT BACK <b>↻</b></button></section>
-  </main>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
-  <script src="script.js"></script>
+  <div id="intro-screen" class="intro-screen" aria-label="Portfolio introduction"><div class="intro-grid"></div><div class="glitter-field" aria-hidden="true"></div><div class="intro-content"><p class="intro-kicker">SYSTEM ONLINE / PORTFOLIO 2026</p><div class="intro-name">DEBJIT<br><em>DAS</em></div><p class="intro-role">TECH ENTHUSIAST <span>+</span> ASPIRING SOFTWARE DEVELOPER</p><div class="intro-loader"><i></i></div></div></div>
+  <div class="cursor-dot" aria-hidden="true"></div><div class="cursor-ring" aria-hidden="true"></div>
+  <header class="site-header"><a class="brand" href="#top" aria-label="Debjit Das home"><span class="brand-mark">DD</span><span>DEBJIT DAS</span></a><nav aria-label="Primary navigation"><a href="#about">About</a><a href="#work">Projects</a><a href="#skills">Skills</a><a href="#contact">Contact</a></nav><a class="availability" href="#contact"><i></i>Open to learning</a><button class="menu-button" aria-label="Open menu" aria-expanded="false">Menu</button></header>
+  <main id="top">
+    <section class="hero section-wrap"><div class="hero-copy"><p class="eyebrow">01 / Tech enthusiast & aspiring software developer</p><h1>Turning ideas<br>into <span class="word-cycle">projects</span><b>.</b></h1><p class="hero-tagline">Turning ideas into projects while learning along the way.</p><p class="location">⌖ Picnic Garden Road, Kolkata</p><div class="hero-actions"><a class="button" href="#work">Explore projects <span>↘</span></a><a class="text-link" href="#about">A little about me <span>↗</span></a></div></div><div class="hero-art" aria-label="Portrait of Debjit Das"><div class="profile-fallback">DD</div><img class="profile-photo" src="profile-photo.jpg.jpg" alt="Portrait of Debjit Das"><div class="scan-ring ring-a"></div><div class="scan-ring ring-b"></div><div class="scan-ring ring-c"></div><small>DEBJIT<br>DAS</small></div></section>
+    <div class="ticker"><span>Curiosity in motion</span><b>✳</b><span>Code with purpose</span><b>✳</b><span>Always learning</span><b>✳</b><span>Curiosity in motion</span></div>
+    <section id="about" class="about section-wrap"><div class="section-label"><p class="eyebrow">02 / About me</p><h2>A work in<br><em>progress.</em></h2></div><div class="about-copy"><p class="lead">I am Debjit, a tech enthusiast and aspiring software developer who enjoys making ideas tangible through code.</p><p>I love to watch anime and play games. Those worlds keep me curious about storytelling, systems, design, and the small details that make an experience memorable.</p><p class="location-card">Currently based in<br><strong>Picnic Garden Road</strong></p></div></section>
+    <section id="work" class="work section-wrap"><div class="section-heading"><p class="eyebrow">03 / Projects</p><h2>Things I've<br><em>made.</em></h2><p>Each project is a small experiment in learning by doing. Explore the live project or inspect its source code.</p></div><div class="projects"><article class="project quiz"><div class="project-logo"><span>?</span></div><small>QUIZ / 001</small><h3>The Curiosity Club <span>↗</span></h3><p>Five-question multiple choice game</p><b class="tech">HTML · CSS · JavaScript</b><div class="project-links"><a href="quiz-game/index.html">Play project ↗</a><a href="https://github.com/debjitd586-ship-it/quiz" target="_blank" rel="noopener">Source code ↗</a></div></article><article class="project shooter"><div class="project-logo"><span>✦</span></div><small>ARENA / 002</small><h3>Neon Run <span>↗</span></h3><p>3D browser shooting experience</p><b class="tech">Three.js · JavaScript</b><div class="project-links"><a href="shooting-game/index.html">Play project ↗</a><a href="https://github.com/debjitd586-ship-it/shooting-game" target="_blank" rel="noopener">Source code ↗</a></div></article><article class="project clock"><div class="project-logo"><span>12</span><i></i></div><small>TIME / 003</small><h3>Chronos World Clock <span>↗</span></h3><p>World time, stopwatch & alarm</p><b class="tech">HTML · CSS · JavaScript</b><div class="project-links"><a href="world-clock/index.html">Open project ↗</a><a href="https://github.com/debjitd586-ship-it/world-clock" target="_blank" rel="noopener">Source code ↗</a></div></article></div></section>
+    <section id="skills" class="skills section-wrap"><div class="section-label"><p class="eyebrow">04 / Skills</p><h2>Learning the<br><em>fundamentals.</em></h2></div><div class="skill-list"><div><span>01</span><strong>C Fundamentals</strong><b>LEARNING</b></div><div><span>02</span><strong>Problem Solving</strong><b>BUILDING</b></div><div><span>03</span><strong>HTML & CSS</strong><b>BUILDING</b></div><div><span>04</span><strong>JavaScript Basics</strong><b>EXPLORING</b></div></div></section>
+    <section class="education section-wrap"><p class="eyebrow">05 / Education</p><div class="education-grid"><div><small>CLASS 10</small><strong>74.33%</strong></div><div><small>HIGHER SECONDARY</small><strong>72.64%</strong></div><div><small>DEGREE</small><strong>B.Tech (CSE)</strong><p>Future Institute of Engineering and Management<br>1st year · MAKAUT</p></div></div></section>
+    <section id="contact" class="contact section-wrap"><div><p class="eyebrow">06 / Keep in touch</p><h2>Let's make<br>something <em>next.</em></h2></div><div><p>I am always open to learning, collaborating, and hearing about interesting ideas.</p><a class="email" href="mailto:debjitd586@gmail.com">debjitd586@gmail.com <span>↗</span></a></div></section>
+  </main><footer class="section-wrap"><span>© 2026 Debjit Das</span><span>Tech enthusiast / aspiring developer</span><a href="https://github.com/debjitd586-ship-it/portfolio" target="_blank" rel="noopener">Portfolio source ↗</a><span>Made while learning ✳</span></footer><script src="script.js"></script>
 </body>
 </html>

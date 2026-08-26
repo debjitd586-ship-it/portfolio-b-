@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="The Curiosity Club, a five-question web development quiz.">
+  <title>The Curiosity Club | Quiz</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="background-mark mark-one">?</div><div class="background-mark mark-two">✳</div>
+  <main class="quiz-shell">
+    <header class="topbar"><a class="brand" href="../index.html"><span class="brand-icon">C</span><span>THE<br><b>CURIOSITY CLUB</b></span></a><span class="category">WEB BASICS / 05 QUESTIONS</span><span class="streak">STREAK <b id="streak">00</b></span></header>
+    <section id="quiz-view" class="quiz-view">
+      <div class="intro-row"><p class="eyebrow">QUIZ 001 / THINK IN PUBLIC</p><div class="progress-copy"><span id="question-number">01</span> / 05</div></div>
+      <div class="progress-track"><i id="progress-bar"></i></div>
+      <div class="question-area"><p class="question-tag" id="question-tag">HTML</p><h1 id="question">Loading question...</h1><div id="answers" class="answers"></div><p id="feedback" class="feedback" aria-live="polite"></p><button id="next-button" class="next-button" hidden>Next question <span>↗</span></button></div>
+    </section>
+    <section id="result-view" class="result-view hidden"><p class="eyebrow">QUIZ COMPLETE / NICE WORK</p><h2>You made it<br><em>count.</em></h2><div class="result-score"><span id="result-score">0</span><small>/ 5 correct</small></div><p id="result-message">Your curiosity is a pretty good superpower.</p><button id="restart-button" class="restart-button">Play again <span>↻</span></button></section>
+    <footer class="quiz-footer"><span>Built for curious minds</span><span>ESC TO RESET</span></footer>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>

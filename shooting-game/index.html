@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Neon Run // Arena</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main id="game-shell">
+    <canvas id="game-canvas" aria-label="Neon Run shooting game"></canvas>
+    <div class="scanlines"></div>
+    <section id="hud" aria-live="polite">
+      <header><div class="brand"><b>N</b><span>NEON RUN<small>SECTOR 07 / LIVE</small></span></div><div><small>WAVE</small><strong id="wave">01</strong></div><div><small>SCORE</small><strong id="score">000000</strong></div></header>
+      <div class="reticle"><i></i></div>
+      <div class="bottom"><div class="armor"><small>ARMOR</small><span><i id="health-bar"></i></span><b id="health">100</b></div><div class="ammo"><small>ENERGY CELLS</small><b id="ammo">12</b><em>/ 12</em></div></div>
+      <p class="hint"><b>W A S D</b> MOVE　 <b>MOUSE</b> AIM　 <b>CLICK</b> FIRE</p>
+    </section>
+    <section id="start-screen" class="screen"><small class="eyebrow">FIRST PERSON // TRAINING SIM</small><h1>NEON<br><em>RUN</em></h1><p>A quick reflex arena built for the afterglow. Clear the wave. Stay moving. Make every shot count.</p><button id="start-button">ENTER THE ARENA <b>↗</b></button><footer><span>W A S D <i>move</i></span><span>MOUSE <i>aim</i></span><span>CLICK <i>fire</i></span></footer></section>
+    <section id="game-over" class="screen hidden"><small class="eyebrow">SIGNAL LOST // RUN COMPLETE</small><h2>GOOD<br><em>RUN.</em></h2><p>FINAL SCORE <strong id="final-score">000000</strong></p><button id="restart-button">RUN IT BACK <b>↻</b></button></section>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

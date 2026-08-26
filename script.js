@@ -1,1 +1,94 @@
-const canvas=document.querySelector('#game-canvas');const scene=new THREE.Scene();scene.fog=new THREE.FogExp2(0x07111d,.025);const camera=new THREE.PerspectiveCamera(68,innerWidth/innerHeight,.1,1000);const renderer=new THREE.WebGLRenderer({canvas,antialias:true});renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.setSize(innerWidth,innerHeight);const arena=new THREE.Group();scene.add(arena);scene.add(new THREE.HemisphereLight(0x83e9ff,0x09101c,1.4));const pink=new THREE.PointLight(0xff197d,16,28);pink.position.set(-6,5,-8);scene.add(pink);const cyan=new THREE.PointLight(0x1fe6ff,18,30);cyan.position.set(7,3,2);scene.add(cyan);const floor=new THREE.Mesh(new THREE.PlaneGeometry(80,80),new THREE.MeshStandardMaterial({color:0x081522,metalness:.7,roughness:.5}));floor.rotation.x=-Math.PI/2;arena.add(floor);const grid=new THREE.GridHelper(80,40,0x1a6370,0x0c2a38);grid.position.y=.02;arena.add(grid);const wallMaterial=new THREE.MeshStandardMaterial({color:0x0b2330,emissive:0x04131d,metalness:.8});[[0,3,-18,36,6,1],[0,3,18,36,6,1],[-18,3,0,1,6,36],[18,3,0,1,6,36]].forEach(([x,y,z,sx,sy,sz])=>{const wall=new THREE.Mesh(new THREE.BoxGeometry(sx,sy,sz),wallMaterial);wall.position.set(x,y,z);arena.add(wall)});const keys={},targets=[],raycaster=new THREE.Raycaster(),clock=new THREE.Clock(),player=new THREE.Object3D();player.position.set(0,1.65,8);scene.add(player);player.add(camera);let running=false,score=0,health=100,ammo=12,wave=1,spawnTimer=0,cooldown=0,yaw=0,pitch=0;function target(){const group=new THREE.Group();const core=new THREE.Mesh(new THREE.IcosahedronGeometry(.8,1),new THREE.MeshStandardMaterial({color:0xff4fa3,emissive:0xff155f,emissiveIntensity:2}));const ring=new THREE.Mesh(new THREE.TorusGeometry(1.08,.045,8,32),new THREE.MeshBasicMaterial({color:0xf5ff79}));ring.rotation.x=Math.PI/2;group.add(core,ring);group.position.set((Math.random()-.5)*27,1.1+Math.random()*3.8,-3-Math.random()*11);group.userData.phase=Math.random()*6;arena.add(group);targets.push(group)}function remove(group){arena.remove(group);targets.splice(targets.indexOf(group),1)}function hud(){document.querySelector('#score').textContent=String(score).padStart(6,'0');document.querySelector('#wave').textContent=String(wave).padStart(2,'0');document.querySelector('#ammo').textContent=String(ammo).padStart(2,'0');document.querySelector('#health').textContent=health;document.querySelector('#health-bar').style.width=`${health}%`}function fire(){if(!running||cooldown>0||!ammo)return;ammo--;cooldown=.22;hud();raycaster.setFromCamera(new THREE.Vector2(0,0),camera);const hits=raycaster.intersectObjects(targets,true);if(hits.length){const group=hits[0].object.parent;score+=100*wave;remove(group);if(!targets.length)wave++;hud()}if(!ammo)setTimeout(()=>{ammo=12;hud()},650)}function reset(){targets.splice(0).forEach(remove);score=0;health=100;ammo=12;wave=1;running=true;document.querySelector('#start-screen').classList.add('hidden');document.querySelector('#game-over').classList.add('hidden');hud();for(let i=0;i<3;i++)target();canvas.requestPointerLock?.()}function end(){running=false;document.exitPointerLock?.();document.querySelector('#final-score').textContent=String(score).padStart(6,'0');document.querySelector('#game-over').classList.remove('hidden')}function animate(){requestAnimationFrame(animate);const delta=Math.min(clock.getDelta(),.05);cooldown=Math.max(0,cooldown-delta);if(running){const speed=7*delta;player.translateZ(-((keys.KeyW?1:0)-(keys.KeyS?1:0))*speed);player.translateX(((keys.KeyD?1:0)-(keys.KeyA?1:0))*speed);player.position.x=THREE.MathUtils.clamp(player.position.x,-16,16);player.position.z=THREE.MathUtils.clamp(player.position.z,-14,12);spawnTimer-=delta;if(spawnTimer<=0&&targets.length<Math.min(3+wave,8)){target();spawnTimer=1.8}targets.forEach((item)=>{item.rotation.y+=delta*1.8;item.position.y+=Math.sin(clock.elapsedTime*2+item.userData.phase)*delta*.55;if(item.position.distanceTo(player.position)<2.4){remove(item);health=Math.max(0,health-10);hud();if(!health)end()}})}renderer.render(scene,camera)}animate();addEventListener('keydown',(event)=>keys[event.code]=true);addEventListener('keyup',(event)=>keys[event.code]=false);addEventListener('mousemove',(event)=>{if(running&&document.pointerLockElement===canvas){yaw-=event.movementX*.0022;pitch=THREE.MathUtils.clamp(pitch-event.movementY*.0022,-1.1,1.1);player.rotation.y=yaw;camera.rotation.x=pitch}});canvas.addEventListener('mousedown',()=>{if(running){canvas.requestPointerLock?.();fire()}});document.querySelector('#start-button').addEventListener('click',reset);document.querySelector('#restart-button').addEventListener('click',reset);addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight)});
+const cursorDot = document.querySelector('.cursor-dot');
+const cursorRing = document.querySelector('.cursor-ring');
+const menuButton = document.querySelector('.menu-button');
+const navigation = document.querySelector('nav');
+const profilePhoto = document.querySelector('.profile-photo');
+const clockLogo = document.querySelector('.clock .project-logo span');
+const clockLogoFrame = document.querySelector('.clock .project-logo');
+
+function updateProjectClock() {
+  const now = new Date();
+  const seconds = now.getSeconds();
+  const minutes = now.getMinutes() + seconds / 60;
+  const hours = (now.getHours() % 12) + minutes / 60;
+  clockLogo.style.setProperty('--clock-hour', `${hours * 30}deg`);
+  clockLogo.style.setProperty('--clock-minute', `${minutes * 6}deg`);
+  clockLogoFrame.style.setProperty('--clock-second', `${seconds * 6}deg`);
+}
+
+updateProjectClock();
+setInterval(updateProjectClock, 1000);
+const introScreen = document.querySelector('#intro-screen');
+const glitterField = document.querySelector('.glitter-field');
+
+for (let index = 0; index < 38; index += 1) {
+  const glitter = document.createElement('i');
+  glitter.className = 'glitter';
+  glitter.style.left = `${Math.random() * 100}%`;
+  glitter.style.top = `${Math.random() * 100}%`;
+  glitter.style.setProperty('--glitter-duration', `${1.4 + Math.random() * 2.2}s`);
+  glitter.style.setProperty('--glitter-delay', `${Math.random() * 1.8}s`);
+  glitterField.append(glitter);
+}
+
+setTimeout(() => introScreen.classList.add('done'), 2600);
+
+profilePhoto.addEventListener('error', () => {
+  profilePhoto.hidden = true;
+});
+
+clockLogo?.addEventListener('click', (event) => {
+  event.preventDefault();
+  clockLogo.classList.add('logo-pulse');
+  setTimeout(() => clockLogo.classList.remove('logo-pulse'), 500);
+});
+
+window.addEventListener('pointermove', (event) => {
+  cursorDot.style.left = `${event.clientX}px`;
+  cursorDot.style.top = `${event.clientY}px`;
+  cursorRing.style.left = `${event.clientX}px`;
+  cursorRing.style.top = `${event.clientY}px`;
+});
+
+document.querySelectorAll('a, button, select').forEach((interactive) => {
+  interactive.addEventListener('mouseenter', () => cursorRing.classList.add('hovering'));
+  interactive.addEventListener('mouseleave', () => cursorRing.classList.remove('hovering'));
+});
+
+menuButton.addEventListener('click', () => {
+  const open = navigation.classList.toggle('open');
+  menuButton.setAttribute('aria-expanded', String(open));
+});
+
+document.querySelectorAll('nav a').forEach((link) => {
+  link.addEventListener('click', (event) => {
+    const target = document.querySelector(link.getAttribute('href'));
+    if (!target) return;
+    event.preventDefault();
+    navigation.classList.remove('open');
+    menuButton.setAttribute('aria-expanded', 'false');
+    target.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+
+const cycleWords = ['projects', 'experiments', 'experiences'];
+let wordIndex = 0;
+const wordElement = document.querySelector('.word-cycle');
+setInterval(() => {
+  wordElement.classList.add('changing');
+  setTimeout(() => {
+    wordIndex = (wordIndex + 1) % cycleWords.length;
+    wordElement.textContent = cycleWords[wordIndex];
+    wordElement.classList.remove('changing');
+  }, 220);
+}, 2400);
+
+const revealObserver = new IntersectionObserver((entries, observer) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12 });
+document.querySelectorAll('.about, .work, .skills, .education, .contact').forEach((section) => revealObserver.observe(section));
