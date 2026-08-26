@@ -14,6 +14,39 @@ const minuteHand = document.querySelector('#minute-hand');
 const secondHand = document.querySelector('#second-hand');
 let alarm = { enabled: false, time: '' };
 let lastAlarmMinute = '';
+let alarmAudio = null;
+let alarmTimer = null;
+const stopAlarmButton = document.querySelector('#stop-alarm');
+
+function stopAlarm() {
+  clearInterval(alarmTimer);
+  alarmTimer = null;
+  alarmAudio?.close();
+  alarmAudio = null;
+  document.querySelector('#alarm-notice').textContent = '';
+  document.querySelector('#alarm-notice').classList.remove('alarm-ringing');
+  stopAlarmButton.hidden = true;
+}
+
+function ringAlarm() {
+  const AudioContext = window.AudioContext || window.webkitAudioContext;
+  if (!AudioContext) return;
+  alarmAudio = new AudioContext();
+  const beep = () => {
+    const oscillator = alarmAudio.createOscillator();
+    const gain = alarmAudio.createGain();
+    oscillator.type = 'sine';
+    oscillator.frequency.value = 740;
+    gain.gain.setValueAtTime(0.0001, alarmAudio.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.18, alarmAudio.currentTime + 0.02);
+    gain.gain.exponentialRampToValueAtTime(0.0001, alarmAudio.currentTime + 0.3);
+    oscillator.connect(gain).connect(alarmAudio.destination);
+    oscillator.start();
+    oscillator.stop(alarmAudio.currentTime + 0.32);
+  };
+  beep();
+  alarmTimer = setInterval(beep, 650);
+}
 
 function updateClock() {
   const now = new Date();
@@ -38,7 +71,9 @@ function checkAlarm(hour, minute) {
   if (alarm.enabled && `${hour}:${minute}` === alarm.time && lastAlarmMinute !== `${hour}:${minute}`) {
     lastAlarmMinute = `${hour}:${minute}`;
     document.querySelector('#alarm-notice').textContent = 'Alarm ringing';
-    alert('Chronos alarm: it is time.');
+    document.querySelector('#alarm-notice').classList.add('alarm-ringing');
+    stopAlarmButton.hidden = false;
+    ringAlarm();
   }
 }
 timezoneSelect.addEventListener('change', () => { locationName.textContent = cities[timezoneSelect.value]; updateClock(); });
@@ -61,4 +96,5 @@ document.querySelector('#start-stopwatch').addEventListener('click', () => {
 });
 document.querySelector('#reset-stopwatch').addEventListener('click', () => { stopwatch = { running: false, start: 0, elapsed: 0 }; document.querySelector('#start-stopwatch').innerHTML = 'Start <span>▶</span>'; formatStopwatch(); });
 document.querySelector('#set-alarm').addEventListener('click', () => { alarm.time = document.querySelector('#alarm-time').value; alarm.enabled = document.querySelector('#alarm-enabled').checked; document.querySelector('#alarm-status').textContent = alarm.enabled && alarm.time ? `Alarm set for ${alarm.time}` : 'No alarm set'; document.querySelector('#alarm-notice').textContent = alarm.enabled && alarm.time ? 'Alarm armed' : ''; });
+stopAlarmButton.addEventListener('click', stopAlarm);
 document.querySelectorAll('.tab').forEach((tab) => tab.addEventListener('click', () => { document.querySelectorAll('.tab').forEach((item) => item.classList.remove('active')); tab.classList.add('active'); document.querySelectorAll('.tool-panel').forEach((panel) => panel.classList.add('hidden')); document.querySelector(`#${tab.dataset.tab}-panel`).classList.remove('hidden'); }));

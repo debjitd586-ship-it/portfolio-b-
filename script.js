@@ -20,6 +20,18 @@ updateProjectClock();
 setInterval(updateProjectClock, 1000);
 const introScreen = document.querySelector('#intro-screen');
 const glitterField = document.querySelector('.glitter-field');
+const fallingStars = document.querySelector('.falling-stars');
+
+for (let index = 0; index < 52; index += 1) {
+  const star = document.createElement('i');
+  star.className = 'falling-star';
+  star.style.left = `${Math.random() * 100}%`;
+  star.style.setProperty('--star-size', `${1 + Math.random() * 2.5}px`);
+  star.style.setProperty('--star-duration', `${7 + Math.random() * 10}s`);
+  star.style.setProperty('--star-delay', `${Math.random() * -16}s`);
+  star.style.setProperty('--star-drift', `${-80 + Math.random() * 160}px`);
+  fallingStars.append(star);
+}
 
 for (let index = 0; index < 38; index += 1) {
   const glitter = document.createElement('i');
