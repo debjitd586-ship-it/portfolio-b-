@@ -3,6 +3,14 @@ const cursorRing = document.querySelector('.cursor-ring');
 const menuButton = document.querySelector('.menu-button');
 const navigation = document.querySelector('nav');
 const profilePhoto = document.querySelector('.profile-photo');
+const heroCopy = document.querySelector('.hero-copy');
+
+window.addEventListener('pointermove', (event) => {
+  if (!heroCopy || window.matchMedia('(prefers-reduced-motion: reduce)').matches || window.innerWidth <= 700) return;
+  const x = (event.clientX / window.innerWidth - 0.5) * 2;
+  const y = (event.clientY / window.innerHeight - 0.5) * 2;
+  heroCopy.style.transform = `perspective(900px) rotateY(${x * 1.8}deg) rotateX(${y * -1.2}deg)`;
+});
 const clockLogo = document.querySelector('.clock .project-logo span');
 const clockLogoFrame = document.querySelector('.clock .project-logo');
 
