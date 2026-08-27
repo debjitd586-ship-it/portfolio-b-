@@ -4,6 +4,67 @@ const menuButton = document.querySelector('.menu-button');
 const navigation = document.querySelector('nav');
 const profilePhoto = document.querySelector('.profile-photo');
 const heroCopy = document.querySelector('.hero-copy');
+const aiMessages = document.querySelector('#ai-messages');
+const aiInput = document.querySelector('#ai-input');
+const aiForm = document.querySelector('#ai-form');
+const heroHeading = document.querySelector('.hero h1');
+if (heroHeading) heroHeading.innerHTML = 'Turning ideas<br><span class="hero-second-line">into <span class="word-cycle">projects</span><b>.</b></span>';
+const sectionSpecifics = {
+  about: 'A quick profile of Debjit\'s interests, motivation, and current base.',
+  work: 'Three browser projects built to practise interaction, logic, and real-time interfaces.',
+  skills: 'The current toolkit: core concepts first, then practical experiments that make them stick.',
+  education: 'Academic milestones and the B.Tech CSE journey currently in progress.',
+  contact: 'For collaboration, feedback, or a conversation about building something useful.'
+};
+Object.entries(sectionSpecifics).forEach(([sectionId, description]) => {
+  const section = document.querySelector(`#${sectionId}`) || document.querySelector(`.${sectionId}`);
+  if (!section || section.querySelector('.section-specific')) return;
+  const note = document.createElement('p');
+  note.className = 'section-specific';
+  note.textContent = description;
+  const heading = section.querySelector('.section-heading, .section-label') || section.querySelector('.education-grid')?.previousElementSibling || section.firstElementChild;
+  heading?.append(note);
+});
+document.querySelectorAll('.project').forEach((project) => {
+  const logo = project.querySelector('.project-logo');
+  if (logo) logo.dataset.project = project.querySelector('small')?.textContent || 'BUILD';
+});
+const aiAnswers = [
+  { words: ['hello', 'hi', 'hey', 'who are you', 'about you'], answer: 'Hi, I am Debjit\'s portfolio guide. Debjit is a tech enthusiast and aspiring software developer who likes turning ideas into small, useful projects.' },
+  { words: ['hobby', 'hobbies', 'anime', 'game', 'free time'], answer: 'Debjit loves watching anime and playing games. They keep him curious about storytelling, systems, design, and memorable experiences.' },
+  { words: ['qualification', 'education', 'school', 'degree', 'study'], answer: 'He scored 74.33% in Class 10 and 72.64% in Higher Secondary at Tiljala High School. He is now a first-year B.Tech CSE student at Future Institute of Engineering and Management under MAKAUT.' },
+  { words: ['project', 'projects', 'made', 'build', 'portfolio'], answer: 'His projects include The Curiosity Club, a five-question quiz; Neon Run, a 3D browser shooting experience; and Chronos World Clock with world time, stopwatch, and alarm tools.' },
+  { words: ['learn', 'learning', 'skill', 'skills', 'code'], answer: 'He is learning C fundamentals, problem solving, HTML, CSS, and JavaScript basics through hands-on projects.' },
+  { words: ['location', 'live', 'where', 'from', 'based', 'city', 'kolkata'], answer: 'Debjit is from and currently based around Picnic Garden Road, Kolkata.' },
+  { words: ['contact', 'email', 'hire', 'reach'], answer: 'You can reach Debjit at debjitd586@gmail.com. He is open to learning, collaborating, and hearing about interesting ideas.' }
+];
+
+function askAi(question) {
+  const cleanQuestion = question.trim();
+  if (!cleanQuestion) return;
+  const userMessage = document.createElement('div');
+  userMessage.className = 'ai-message ai-user';
+  const userText = document.createElement('p');
+  userText.textContent = cleanQuestion;
+  const userLabel = document.createElement('b');
+  userLabel.textContent = 'YOU';
+  userMessage.append(userText, userLabel);
+  aiMessages.append(userMessage);
+  const match = aiAnswers.find((item) => item.words.some((word) => cleanQuestion.toLowerCase().includes(word)));
+  const botMessage = document.createElement('div');
+  botMessage.className = 'ai-message ai-bot';
+  const botLabel = document.createElement('b');
+  botLabel.textContent = 'AI';
+  const botText = document.createElement('p');
+  botText.textContent = match?.answer || 'Try asking about Debjit\'s hobbies, qualifications, projects, skills, location, or contact details.';
+  botMessage.append(botLabel, botText);
+  aiMessages.append(botMessage);
+  aiMessages.scrollTop = aiMessages.scrollHeight;
+  aiInput.value = '';
+}
+
+aiForm.addEventListener('submit', (event) => { event.preventDefault(); askAi(aiInput.value); });
+document.querySelectorAll('.ai-suggestions button').forEach((button) => button.addEventListener('click', () => askAi(button.dataset.question)));
 
 window.addEventListener('pointermove', (event) => {
   if (!heroCopy || window.matchMedia('(prefers-reduced-motion: reduce)').matches || window.innerWidth <= 700) return;
