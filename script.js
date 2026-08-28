@@ -7,6 +7,8 @@ const heroCopy = document.querySelector('.hero-copy');
 const aiMessages = document.querySelector('#ai-messages');
 const aiInput = document.querySelector('#ai-input');
 const aiForm = document.querySelector('#ai-form');
+const initialAiMessage = aiMessages?.querySelector('.ai-message.ai-bot p');
+if (initialAiMessage) initialAiMessage.textContent = 'Ready when you are. Choose a topic or ask a question.';
 const heroHeading = document.querySelector('.hero h1');
 if (heroHeading) heroHeading.innerHTML = 'Turning ideas<br><span class="hero-second-line">into <span class="word-cycle">projects</span><b>.</b></span>';
 const sectionSpecifics = {
@@ -56,11 +58,15 @@ function askAi(question) {
   const botLabel = document.createElement('b');
   botLabel.textContent = 'AI';
   const botText = document.createElement('p');
-  botText.textContent = match?.answer || 'Try asking about Debjit\'s hobbies, qualifications, projects, skills, location, or contact details.';
+  botText.textContent = 'Thinking...';
   botMessage.append(botLabel, botText);
   aiMessages.append(botMessage);
   aiMessages.scrollTop = aiMessages.scrollHeight;
   aiInput.value = '';
+  window.setTimeout(() => {
+    botText.textContent = match?.answer || 'Try asking about Debjit\'s hobbies, qualifications, projects, skills, location, or contact details.';
+    aiMessages.scrollTop = aiMessages.scrollHeight;
+  }, 420);
 }
 
 aiForm.addEventListener('submit', (event) => { event.preventDefault(); askAi(aiInput.value); });
@@ -172,4 +178,4 @@ const revealObserver = new IntersectionObserver((entries, observer) => {
     }
   });
 }, { threshold: 0.12 });
-document.querySelectorAll('.about, .work, .skills, .education, .contact').forEach((section) => revealObserver.observe(section));
+document.querySelectorAll('.about, .work, .skills, .education, .ai-guide, .contact').forEach((section) => revealObserver.observe(section));

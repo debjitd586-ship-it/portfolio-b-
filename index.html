@@ -15,7 +15,7 @@
     .ai-launcher b{color:var(--green);font-size:17px;font-weight:400}.ai-launcher-dot{position:relative;width:20px;height:16px;border:1px solid var(--green);border-radius:6px;background:rgba(200,241,105,.12);box-shadow:0 0 12px rgba(200,241,105,.45)}.ai-launcher-dot:before{content:'••';position:absolute;left:3px;top:-4px;color:var(--green);font:bold 10px var(--sans);letter-spacing:2px}.ai-launcher-dot:after{content:'';position:absolute;left:8px;top:-6px;width:3px;height:4px;border-left:1px solid var(--green);border-right:1px solid var(--green)}
     .ai-bot-logo{position:relative;display:inline-grid;place-items:center;width:25px;height:21px;margin-right:7px;border:1px solid var(--green);border-radius:7px;background:rgba(200,241,105,.12);color:var(--green);font:8px var(--mono);box-shadow:0 0 13px rgba(200,241,105,.3)}.ai-bot-logo:before{content:'';position:absolute;top:-5px;width:1px;height:4px;background:var(--green)}.ai-bot-logo:after{content:'•';position:absolute;top:-12px;color:var(--orange);font-size:12px}
     @media(max-width:900px){.hero{grid-template-columns:1fr;min-height:0;padding-top:100px;padding-bottom:95px}.hero-copy{max-width:650px}.hero-art{width:min(62vw,380px);margin:85px auto 0}}
-    @media(max-width:700px){.ai-launcher{right:16px;bottom:16px;padding:11px 12px}.ai-launcher span:nth-child(2){font-size:9px}.hero{padding-top:85px;padding-bottom:80px}.hero h1{font-size:clamp(43px,12vw,64px)}.hero h1 .word-cycle{min-width:0}.hero-art{width:78vw;margin-top:75px}}
+    @media(max-width:700px){.ai-launcher{right:16px;bottom:16px;padding:11px 12px}.ai-launcher span:nth-child(2){font-size:9px}.hero{padding-top:85px;padding-bottom:80px}.hero h1{font-size:clamp(43px,12vw,64px);line-height:.95;margin-bottom:32px}.hero h1 .word-cycle{min-width:0}.hero-tagline{position:relative;z-index:1}.hero-art{width:78vw;margin-top:75px}}
     .ai-status:before{content:'AI';display:inline-grid;place-items:center;width:25px;height:21px;margin-right:7px;border:1px solid var(--green);border-radius:7px;background:rgba(200,241,105,.12);color:var(--green);font:8px var(--mono);box-shadow:0 0 13px rgba(200,241,105,.3);vertical-align:middle}
     .hero-copy:after{display:none}
     .hero-copy{transform:none!important;transition:none}
@@ -38,6 +38,16 @@
     .ai-panel-top,.ai-suggestions button{color:#e8c8ff}.text-link,.email{color:#f4dfff;text-shadow:0 0 13px rgba(217,70,239,.46)}
     @keyframes text-flash{0%,100%{text-shadow:0 0 8px rgba(168,85,247,.24)}50%{text-shadow:0 0 16px rgba(217,70,239,.58),0 0 28px rgba(168,85,247,.2)}}
     @media(prefers-reduced-motion:reduce){.hero-tagline,.about-copy .lead,.skill-list strong,.ai-message p{animation:none}}
+    .hero{animation:hero-arrive 1.1s .15s both cubic-bezier(.2,.75,.25,1)}
+    .about,.work,.skills,.education,.ai-guide,.contact{opacity:0;filter:blur(8px);transform:translateY(70px) scale(.97);transition:opacity 1s ease,filter 1s ease,transform 1s cubic-bezier(.2,.75,.25,1)}
+    .about.visible,.work.visible,.skills.visible,.education.visible,.ai-guide.visible,.contact.visible{opacity:1;filter:blur(0);transform:none}
+    .about.visible .section-label,.work.visible .section-heading,.skills.visible .section-label,.education.visible>p,.ai-guide.visible .ai-heading,.contact.visible>div{animation:section-content-in .9s .18s both cubic-bezier(.2,.75,.25,1)}
+    .about.visible .about-copy,.skills.visible .skill-list,.education.visible .education-grid,.ai-guide.visible .ai-panel,.contact.visible>div+div{animation:section-content-in .9s .32s both cubic-bezier(.2,.75,.25,1)}
+    .work.visible .project{animation:project-arrive .8s both cubic-bezier(.2,.75,.25,1)}.work.visible .project:nth-child(2){animation-delay:.14s}.work.visible .project:nth-child(3){animation-delay:.28s}
+    @keyframes hero-arrive{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+    @keyframes section-content-in{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
+    @keyframes project-arrive{from{opacity:0;filter:blur(7px);transform:translateY(34px) scale(.95)}to{opacity:1;filter:blur(0);transform:none}}
+    @media(prefers-reduced-motion:reduce){.hero,.about,.work,.skills,.education,.ai-guide,.contact,.about.visible .section-label,.work.visible .section-heading,.skills.visible .section-label,.education.visible>p,.ai-guide.visible .ai-heading,.contact.visible>div,.about.visible .about-copy,.skills.visible .skill-list,.education.visible .education-grid,.ai-guide.visible .ai-panel,.contact.visible>div+div,.work.visible .project{animation:none;opacity:1;filter:none;transform:none;transition:none}}
   </style>
 </head>
 <body>
